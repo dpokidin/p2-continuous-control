@@ -1,11 +1,52 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>Dillinger.md</title><style></style></head><body id="preview">
 <h1 class="code-line" data-line-start=0 data-line-end=1><a id="Report_0"></a>Report</h1>
-<p class="has-line-data" data-line-start="1" data-line-end="2">I adopted a DDPG algorithm to solve a 20-agent environment. Some of the features:</p>
+<h2 class="code-line" data-line-start=1 data-line-end=2><a id="Summary_1"></a>Summary</h2>
+<p class="has-line-data" data-line-start="2" data-line-end="3">I adopted a <strong>DDPG</strong> algorithm to solve a 20-agent environment. The algorithm contains two networks:</p>
 <ul>
-<li class="has-line-data" data-line-start="2" data-line-end="3">th he actor/critic networks borrowed from the course repository with a minor modification.</li>
-<li class="has-line-data" data-line-start="3" data-line-end="4">applied gradiate clipping on critic as per advice in the benchmark implementation</li>
-<li class="has-line-data" data-line-start="4" data-line-end="5">implemented 3-step boostrap</li>
-<li class="has-line-data" data-line-start="5" data-line-end="6">Ornstein-Uhlenbeck process is fixed. (in the repository it used the uniform distribution instead of gaussian)</li>
-<li class="has-line-data" data-line-start="6" data-line-end="7">the environment was solved in 62 episodes</li>
+<li class="has-line-data" data-line-start="3" data-line-end="4">the first one (actor) learns the optimal policy response to a state.</li>
+<li class="has-line-data" data-line-start="4" data-line-end="6">the second one (critic) learns the value function and provides learning target for the actor.</li>
+</ul>
+<p class="has-line-data" data-line-start="6" data-line-end="7">Some of the features:</p>
+<ul>
+<li class="has-line-data" data-line-start="7" data-line-end="8">th he actor/critic networks borrowed from the course repository with a minor modification.</li>
+<li class="has-line-data" data-line-start="8" data-line-end="9">applied gradiate clipping on critic as per advice in the benchmark implementation</li>
+<li class="has-line-data" data-line-start="9" data-line-end="10">implemented 3-step boostrap</li>
+<li class="has-line-data" data-line-start="10" data-line-end="11">Ornstein-Uhlenbeck process is fixed. (in the repository it used the uniform distribution instead of gaussian)</li>
+<li class="has-line-data" data-line-start="11" data-line-end="12">the environment was solved in 62 episodes</li>
+</ul>
+<h2 class="code-line" data-line-start=12 data-line-end=13><a id="Learning_path_12"></a>Learning path</h2>
+<p class="has-line-data" data-line-start="13" data-line-end="14"><img src="https://github.com/dpokidin/p2-continuous-control/blob/main/training.png?raw=true" alt="IMAGE"></p>
+<h2 class="code-line" data-line-start=16 data-line-end=17><a id="DDPG_for_parallel_training_16"></a>DDPG for parallel training</h2>
+<p class="has-line-data" data-line-start="17" data-line-end="20">To adapt the algorithm for multi-agent environment I simply needed to slightly modify he version of DDPG provided in the course repository.<br>
+In particular, I had to adjust the state, action arrays shapes to account for the fact that now those are the states and action of 20 different agents.<br>
+I also modified the Ornstein-Uhlenbeck action noise and fixed an error in random number sampling. In the version in the course repository the random samples for the volatility part of the equation were drawn from a uniform distribution rather than Gaussian.</p>
+<h2 class="code-line" data-line-start=20 data-line-end=21><a id="3step_bootstrap_20"></a>3-step bootstrap</h2>
+<p class="has-line-data" data-line-start="21" data-line-end="22">I implemented a three step bootstraping to enhance the learning stability of the algorithm. To do so I had to rewrite the replay buffer such that it stores sequences rather than point in time samples.</p>
+<h2 class="code-line" data-line-start=22 data-line-end=23><a id="Actor_22"></a>Actor</h2>
+<p class="has-line-data" data-line-start="23" data-line-end="24">The actor architechture:</p>
+<ul>
+<li class="has-line-data" data-line-start="24" data-line-end="25">2 layers 128 units each</li>
+<li class="has-line-data" data-line-start="25" data-line-end="26">batch normalization in between</li>
+<li class="has-line-data" data-line-start="26" data-line-end="27">Adam optimizer</li>
+<li class="has-line-data" data-line-start="27" data-line-end="28">learning rate 0.0003</li>
+</ul>
+<h2 class="code-line" data-line-start=28 data-line-end=29><a id="Critic_28"></a>Critic</h2>
+<p class="has-line-data" data-line-start="29" data-line-end="30">Architechture:</p>
+<ul>
+<li class="has-line-data" data-line-start="30" data-line-end="31">Layer 1. 128 units. Input: state</li>
+<li class="has-line-data" data-line-start="31" data-line-end="32">Layer 2 128 units. Input: layer1, action</li>
+<li class="has-line-data" data-line-start="32" data-line-end="33">batch normalization in between</li>
+<li class="has-line-data" data-line-start="33" data-line-end="34">Adam optimizer</li>
+<li class="has-line-data" data-line-start="34" data-line-end="35">learning rate 0.0003</li>
+</ul>
+<h2 class="code-line" data-line-start=35 data-line-end=36><a id="Other_parameters_35"></a>Other parameters</h2>
+<ul>
+<li class="has-line-data" data-line-start="36" data-line-end="37">Soft update parameter(tau): 0.001</li>
+<li class="has-line-data" data-line-start="37" data-line-end="39">discount rate : 0.97</li>
+</ul>
+<h2 class="code-line" data-line-start=39 data-line-end=40><a id="Potential_steps_that_could_improve_the_algorithm_39"></a>Potential steps that could improve the algorithm:</h2>
+<ul>
+<li class="has-line-data" data-line-start="40" data-line-end="41">Generalized advantage learning</li>
+<li class="has-line-data" data-line-start="41" data-line-end="42">Prioritized sampling</li>
 </ul>
 </body></html>
