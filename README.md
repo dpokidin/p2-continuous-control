@@ -1,13 +1,8 @@
 # Project 2: Continuous-control
 
 ### Introduction
-
- This is my submission to the first project.
- I implemented a Deep Q Network featuring:
- * Experience replay (borrowed from DQN lesson)
- * Fixed target (borrowed from DQN)
- * Double DQN (implemented myself)
- * Prioritized experience (implemented myself)
+ This is my submission to the second project of the Udacity Deep Reinforcement Learning course. 
+ Please read 'Report.html' for more details of my implementation. 
 
 ### Instructions
 1. Clone/download this repository
