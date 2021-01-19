@@ -11,7 +11,7 @@ from collections import deque
 import matplotlib.pyplot as plt
 from ddpg_agent_n_bootstrap import Agent
 from unityagents import UnityEnvironment
-env = UnityEnvironment(file_name='path_to_reacher.exe')
+env = UnityEnvironment(file_name='Reacher_Windows_x86_64/Reacher.exe')
 # parameters
 BRAIN_NAME = 'ReacherBrain'
 NUM_AGENTS = 20
@@ -57,7 +57,7 @@ def ddpg(n_episodes=1000, print_every=50):
             torch.save(agent.actor_local.state_dict(), 'checkpoint_actor.pth')
             torch.save(agent.critic_local.state_dict(), 'checkpoint_critic.pth')
         
-        if np.mean(scores_deque)>=30.0:
+        if np.mean(scores_deque)>=30.0 and i_episode>=100:
             print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_deque)))
             torch.save(agent.actor_local.state_dict(), 'checkpoint_actor.pth')
             torch.save(agent.critic_local.state_dict(), 'checkpoint_critic.pth')
