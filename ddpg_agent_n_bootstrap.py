@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import copy
-from model_plag import Actor, Critic
+from model import Actor, Critic
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
