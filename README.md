@@ -39,4 +39,6 @@ The environment is considered solved, when the average (over 100 episodes) of th
 5. If you want to train an agant from scratch, run `Training.py` file.
 6. To watch a trained agent perfomance go to in `Continuous_Control.ipynb`!  
 
-
+### Training process
+ The environment was solved in about 62 episodes.
+ ![IMAGE](https://github.com/dpokidin/p2-continuous-control/blob/main/training.png?raw=true)
