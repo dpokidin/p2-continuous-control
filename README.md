@@ -15,5 +15,5 @@
 
 4. Place the file in the repository folder. 
 5. If you want to train an agant from scratch, run `Training.py` file.
-6. To watch a trained agent perfomance go to in `Continuous_control.ipynb`!  
+6. To watch a trained agent perfomance go to in `Continuous_Control.ipynb`!  
 
